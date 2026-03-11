@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: medicine-reminder
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: DB_NAME
+        value: medicine_reminder
+      - key: SECRET_KEY
+        generateValue: true
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: PREFERRED_URL_SCHEME
+        value: https

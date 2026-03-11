@@ -3,7 +3,7 @@ from pymongo.errors import ConnectionFailure, OperationFailure
 from config import Config
 import certifi
 import urllib.parse
-
+"""MongoDB utility class for handling database operations"""
 class MongoDB:
     def __init__(self):
         try:

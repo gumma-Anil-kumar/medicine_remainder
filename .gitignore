@@ -1,0 +1,26 @@
+# Environments
+.env
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Uploads (but not the folder structure)
+static/uploads/*
+!static/uploads/.gitkeep
+
+# Logs
+*.log
+instance/

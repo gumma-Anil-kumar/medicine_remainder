@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Add Medicine{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="fas fa-plus-circle"></i> Add New Medicine</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="medicine_name" class="form-label">Medicine Name *</label>
+                        <input type="text" class="form-control" id="medicine_name" name="medicine_name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Days and Timings *</label>
+                        <div class="row">
+                            {% for day in ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] %}
+                                <div class="col-md-6 mb-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input day-checkbox" type="checkbox" 
+                                                       name="day_{{ day }}" id="day_{{ day }}" value="{{ day }}">
+                                                <label class="form-check-label" for="day_{{ day }}">
+                                                    {{ day|capitalize }}
+                                                </label>
+                                            </div>
+                                            <div class="timings-container mt-2" id="timings_{{ day }}" style="display: none;">
+                                                <label class="form-label">Timings (HH:MM)</label>
+                                                <div class="timing-inputs">
+                                                    <div class="input-group mb-2">
+                                                        <input type="time" class="form-control" name="timings_{{ day }}[]">
+                                                        <button type="button" class="btn btn-outline-success add-timing" data-day="{{ day }}">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="medicine_image" class="form-label">Medicine Image</label>
+                        <input type="file" class="form-control" id="medicine_image" name="medicine_image" accept="image/*">
+                        <small class="text-muted">Upload a picture of the medicine (optional)</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Medicine
+                    </button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    // Show/hide timings based on day selection
+    $('.day-checkbox').change(function() {
+        var day = $(this).val();
+        var timingsContainer = $('#timings_' + day);
+        
+        if($(this).is(':checked')) {
+            timingsContainer.slideDown();
+        } else {
+            timingsContainer.slideUp();
+        }
+    });
+    
+    // Add more timing inputs
+    $('.add-timing').click(function() {
+        var day = $(this).data('day');
+        var container = $(this).closest('.timing-inputs');
+        
+        var newInput = `
+            <div class="input-group mb-2">
+                <input type="time" class="form-control" name="timings_${day}[]">
+                <button type="button" class="btn btn-outline-danger remove-timing">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        `;
+        
+        container.append(newInput);
+    });
+    
+    // Remove timing input
+    $(document).on('click', '.remove-timing', function() {
+        $(this).closest('.input-group').remove();
+    });
+});
+</script>
+{% endblock %}

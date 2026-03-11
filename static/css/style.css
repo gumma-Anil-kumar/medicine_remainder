@@ -1,0 +1,114 @@
+/* Custom styles for medicine reminder */
+
+/* Dashboard cards */
+.dashboard-card {
+    transition: transform 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Medicine list */
+.medicine-item {
+    border-left: 4px solid #007bff;
+    margin-bottom: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.medicine-item.taken {
+    border-left-color: #28a745;
+    opacity: 0.8;
+}
+
+.medicine-item.missed {
+    border-left-color: #dc3545;
+}
+
+/* Notification badge */
+.notification-badge {
+    position: relative;
+    top: -10px;
+    right: 5px;
+    font-size: 0.7em;
+}
+
+/* Large buttons for elderly */
+.btn-lg {
+    font-size: 1.2rem;
+    padding: 15px 20px;
+}
+
+/* Time picker styling */
+input[type="time"] {
+    font-size: 1.1rem;
+    padding: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .btn-lg {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+}
+
+/* Animations for notifications */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* History timeline */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline-item {
+    padding: 20px;
+    border-left: 2px solid #007bff;
+    position: relative;
+    margin-left: 20px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #007bff;
+}
+
+.timeline-item.taken::before {
+    background-color: #28a745;
+}
+
+.timeline-item.missed::before {
+    background-color: #dc3545;
+}

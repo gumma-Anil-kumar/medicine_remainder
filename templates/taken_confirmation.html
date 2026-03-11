@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Medicine Taken - Confirmation{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5">
+            <div class="card-body text-center p-5">
+                {% if error %}
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-circle fa-5x text-warning"></i>
+                    </div>
+                    <h2 class="text-warning mb-3">Oops!</h2>
+                    <p class="lead mb-4">{{ error }}</p>
+                {% else %}
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle fa-5x text-success"></i>
+                    </div>
+                    <h2 class="text-success mb-3">Medicine Taken!</h2>
+                    <p class="lead mb-2">Thank you for confirming.</p>
+                    <p class="mb-4">
+                        <strong>{{ medicine_name }}</strong> at <strong>{{ time }}</strong>
+                    </p>
+                    <div class="alert alert-success">
+                        <i class="fas fa-heart"></i> Stay healthy!
+                    </div>
+                {% endif %}
+                
+                <hr class="my-4">
+                
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+                        <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                    </a>
+                    <a href="{{ url_for('history') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-history"></i> View History
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-body bg-light">
+                <h5><i class="fas fa-star text-warning"></i> Your Health Matters</h5>
+                <p class="mb-0">Taking medicines on time helps you recover faster and stay healthy. Keep up the good work!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fa-check-circle {
+    animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+</style>
+{% endblock %}

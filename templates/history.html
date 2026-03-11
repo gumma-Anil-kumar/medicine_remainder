@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Medicine History{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="fas fa-history"></i> Medicine History</h4>
+            </div>
+            <div class="card-body">
+                {% if history %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Medicine</th>
+                                    <th>Scheduled Time</th>
+                                    <th>Taken Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in history %}
+                                    <tr>
+                                        <td>{{ entry.date }}</td>
+                                        <td>{{ entry.medicine_name }}</td>
+                                        <td>{{ entry.time }}</td>
+                                        <td>
+                                            {% if entry.taken_time %}
+                                                {{ entry.taken_time.strftime('%H:%M') if entry.taken_time else 'N/A' }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if entry.status == 'taken' %}
+                                                <span class="badge bg-success">Taken</span>
+                                            {% elif entry.status == 'missed' %}
+                                                <span class="badge bg-danger">Missed</span>
+                                            {% else %}
+                                                <span class="badge bg-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if entry.status == 'pending' %}
+                                                <button class="btn btn-sm btn-success" 
+                                                        onclick="handleNotification('{{ entry._id }}', 'taken')">
+                                                    <i class="fas fa-check"></i> Mark Taken
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-history fa-4x text-muted mb-3"></i>
+                        <h4>No History Yet</h4>
+                        <p class="text-muted">Your medicine intake history will appear here.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function handleNotification(historyId, action) {
+    fetch(`/api/notification/${historyId}/${action}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            location.reload(); // Reload to show updated status
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred');
+    });
+}
+</script>
+{% endblock %}

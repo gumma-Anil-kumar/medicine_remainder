@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row align-items-center min-vh-75">
+    <div class="col-md-6">
+        <h1 class="display-4 mb-4">Never Miss Your Medicines Again!</h1>
+        <p class="lead mb-4">
+            A simple and friendly medicine reminder app designed especially for elderly people. 
+            Get timely reminders via email, SMS, or phone calls.
+        </p>
+        
+        {% if not current_user.is_authenticated %}
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-2">
+                    <i class="fas fa-user-plus"></i> Get Started
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </div>
+        {% else %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+            </a>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-center p-5">
+                <i class="fas fa-pills fa-5x text-primary mb-4"></i>
+                <h3>How It Works</h3>
+                <div class="row mt-4">
+                    <div class="col-4">
+                        <i class="fas fa-plus-circle fa-2x text-success mb-2"></i>
+                        <p>Add Medicines</p>
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-bell fa-2x text-warning mb-2"></i>
+                        <p>Set Reminders</p>
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-check-circle fa-2x text-info mb-2"></i>
+                        <p>Track History</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="text-center mb-4">Features</h2>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                <h5>Email Reminders</h5>
+                <p>Get email notifications at medicine time</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-sms fa-3x text-success mb-3"></i>
+                <h5>SMS Alerts</h5>
+                <p>Receive text messages on your phone</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-phone fa-3x text-info mb-3"></i>
+                <h5>Phone Calls</h5>
+                <p>Automated voice call reminders</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
